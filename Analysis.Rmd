@@ -120,14 +120,15 @@ anova(lm(elevation ~ scientificName,
 ANOVA p-value: 0.045 ?????
 This number shows 
 
-```{r map-of-culex-weight-all-sites}
+Map for the elevation of *Culex tarsalis* at all NEON sites:
+```{r map-of-culex-elevation-all-sites}
 usa_map <- map_data("usa")
 
 points_with_lat_long <- mos_all %>%
   filter(!is.na(decimalLatitude)) %>%
   filter(individualCount > 0) %>%
   filter(scientificName == "Culex tarsalis") %>%
-  group_by(siteID, taxa) %>% 
+  group_by(siteID.taxa) %>% 
   summarise(total_count = sum(individualCount),
             mean_lat = mean(decimalLatitude),
             mean_long = mean(decimalLongitude))
@@ -137,7 +138,7 @@ ggplot() +
                aes(x = long,
                    y = lat,
                    group = group),
-               fill = "dark green") +
+               fill = "light blue") +
   coord_fixed(1.3) +
   geom_point(data =  points_with_lat_long,
              aes(x = mean_long,
