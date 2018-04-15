@@ -12,6 +12,21 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introduction
+This report is testing how the distribution of elevation varies across the National Ecological Observatory Network (NEON) sites and differing species, using data collected and publically presented by NEON. This report will explain NEON's work/purpose, NEON's design, test a hypothesis, and lastly analyze the results. The National Ecological Observatory Network is an observation platform for discovering, understanding, and forecasting the impacts of climate change, land use change, and invasive species on continental-scale ecology with sites distributed within 20 eco-climatic domains across United States, Alaska, Hawaii, and Puerto Rico using remote sensing technologies [@kampe2010neon]. NEON has allowed for easy accessible data to the public by providing the data the observatory has collected to scientists, land managers, policy makers, educators, and members of the general public interested in addressing these major ecological challenges. The data produced by NEON are strategically aimed at addressing ecological questions. Questions that are analyzing complex ecological processes and relationships that govern large scale patterns consistent with the measuring the drivers of change, biogeochemical cycling, and population and community responses across a variety of ecosystems in the ultimate hopes of expanding our understanding of ecological processes and to improve our ability to forecast these ecological changes [@thorpe2016introduction].
+
+The project is responsible for measuring the causes and effects of environmental change across the United States within varying domains that represent different landforms, vegetation, climate, and ecosystem dynamics. The project is constantly collecting data to provide and statistically represent ecological, physical, and biological variability across the US. NEON has four different site types that the observatory collects data from, these sites include: core terrestrial sites, core aquatic sites, relocatable terrestrial sites, and lastly relocatable aquatic sites. The sites are collected  using five measurement subsystems of the Observatory including: the Airborne Observation Platform (AOP), Aquatic Instrument System (AIS), Aquatic Observation System (AOS), Terrestrial Instrument System (TIS), and Terrestrial Observation System (TOS) [@thorpe2016introduction]. These five systems of measurement have been used to collect endless data and NEON has continued to do so by properly standardizing protocols across all sites and maintaining community best practices. 
+
+While NEON collects a wide range of data from atmospheric to even ecohydrology this report will specifically be looking at NEON's collection of mosquito data. The National Ecological Observatory Network (NEON) monitors mosquito populations across its broad geographical range of sites because of their prevalence in food webs, sensitivity to abiotic factors, and relevance for human health. Mosquitos (sentinel taxa) are helpful organisms to use in study because of they are a diverse wide spread family of insects with varying life spans and generation times with wide geographic distributions that allow for comparisions across the continent as well as across major vegetation types. Mosquitos are of great importance to human health due to their epidemiological significance with associated diseases and their ecological influence of crops and healthy livestock. Mosquitos are also ideal for evaluating the ecological effects of global change as mosquitos are incluenced by climate, vegetation, and host availability. Mosquitoes generally respond quickly to environmental change. Mosquitos are highly mobile and move to new areas depending on climatic conditions. For, example, as climate warms some mosquitos are expanding their geographical ranges and effeciency of transmission, resulting in mosquitos having more interactions with humans [@hoekman2016design]. 
+
+NEON mosquito sampling takes place regularly during a time peroid in which mosquitos are active, this varies by domain. Sampling typically takes place more frequently at core sites than relocatable sites. Core sites are prioritized because of the long‐term nature of core site sampling. In addition, core sites are in wild land areas and provide baseline data to assess how ecological systems are changing through time [@hoekman2016design]. 
+
+This report will specifically be analyzing how the distribution of elevation varies across all NEON sites and species using boxplots and geographical data. The elevation of the "ONAQ" NEON site and the elevation of *Culex tarsalis* species will be of significance for this report. 
+
+"ONAQ" is short for Onaqui-Ault site. "ONAQ" is a core terrestrial site in Utah south of the rapidly developing Salt Lake City area. This area has been grazed by domestic livestock since settlement, the Forest Service has instituted a light to moderate fall and winter grazing regime. The vegetation of this site is dominantly sagebrush and western jupiner. Fire is a component of sagebrush, however invasions of exotic vegetation such as Bromus tectorum (aka drooping brome or cheatgrass) have dramatically shortened fire return intervals. The invasion fire feedback has resulted in the loss of native perenial species allowing for the opportunity to specifically study the restoration of sagebrush at this site and collect data on the effects of invasive species and rodent dynamics. 
+The climate of this reason is dry as it is located in the intermountain region, between the Sierra Nevada and Cascade ranges. In winter, the climate is dominated by a cool moist air from the northern Pacific The mountain ranges cast a rain shadow across the Intermountain Region resulting in low precipitation in the basins. As this site is located in the Great Basin the site experiences the effects of dust from urban and agricultural use.  
+This domain is broadly characterized by combinations of lower-elevation, sagebrush steppe and higher-elevation montane forests. This complex topography impacts climate, hydrology, and species distributions, with montane zones exerting a disproportionate influence.
+
+The *Culex tarsalis* species
 
 Delete this placeholder text, and replace it with your introduction text. You should include background on the NEON project including proper citations (e.g. [@thorpe2016introduction]), the sets of sites you are comparing, and other relevent background information related to your specific hypotheses, including perhaps information on the mosquito sampling design [@hoekman2016design].
 
@@ -64,6 +79,9 @@ ggplot(mos_all, aes(x = siteID.taxa,
 anova(lm(elevation ~ siteID.taxa,
          data = mos_all))
 ```
+**Chi-square test**
+ANOVA p-value: 0.045 ?????
+This number shows there are some similarities but not all of the sites have similarities, this is most likely the case as the majority of the dry mass data for the sites is between 0 and 400 grams, but there is one outlier showing a mass of 1200 grams, somewhat skewing the p-value as the majority of the dry mass for each site is extremely similar. 
 
 Box plot for the elevation of mosquitos at "ONAQ" NEON site:
 ```{r boxplot-for-ONAQ-site}
@@ -77,7 +95,13 @@ mos_all %>%
   ggtitle("Elevation of Mosquitos Species at ONAQ NEON site") +
   xlab("Species") +
   ylab("Elevation")
+#r statistical test
+anova(lm(elevation ~ scientificName,
+         data = mos_all))
 ```
+**Chi-square test**
+ANOVA p-value: 0.045 ?????
+This number shows 
 
 Box plot for the elevation of *Culex tarsalis* at all NEON sites:
 ```{r boxplot-of-culex-elevation-all-sites}
@@ -89,7 +113,12 @@ mos_all %>%
   ggtitle("Elevation of Culex tarsalis Species at all NEON Sites") +
   xlab("Site") +
   ylab("Elevation")
+anova(lm(elevation ~ scientificName,
+         data = mos_all))
 ```
+**Chi-square test**
+ANOVA p-value: 0.045 ?????
+This number shows 
 
 ```{r map-of-culex-weight-all-sites}
 usa_map <- map_data("usa")
@@ -117,6 +146,10 @@ ggplot() +
 ```
 
 # Discussion
+
+Higher temperatures below threshold levels can shorten the life cycle of both arboviruses and mosquitoes, increase blood meal and oviposition rates and thereby the efficiency of transmission (Reisen 2010). Together, these climate effects may expand the biogeographic ranges of mosquitoes and the parasites they transmit into temperate areas.
+
+This domain is broadly characterized by combinations of lower-elevation, sagebrush steppe and higher-elevation montane forests. This complex topography impacts climate, hydrology, and species distributions, with montane zones exerting a disproportionate influence.
 
 Discuss the results you found in the context of what you know about the site/sites and the predominant types of vegatation in those locations. Think also about the community dynamics of the mammal community at each of the sites, in the context of what you know about different types of species interactions, food webs, trophic transfer, etc.
 
