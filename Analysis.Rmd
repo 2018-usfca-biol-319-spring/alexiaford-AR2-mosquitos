@@ -1,7 +1,7 @@
 ---
 title: "Analysis Report 2: NEON Mosquito Trap Data"
-author: "Don Francisco"
-date: "4/3/2018"
+author: "Alexia Ford"
+date: "4/16/2018"
 bibliography: references.bib
 csl: ecology.csl
 output: github_document
@@ -49,6 +49,71 @@ mos_expert <- mos_expert %>%
 # join the two datasets together based on the shared 'sampleIS' column
 mos_all <- mos_expert %>%
   full_join(mos_trapping, by = "sampleID", suffix = c(".taxa", ".sample"))
+```
+
+Box plot for the elevation of mosquitos at all NEON sites:
+```{r boxplot-of-mosquitos-elevation}
+# elevation of mosquitos at all sites in the NEON data
+ggplot(mos_all, aes(x = siteID.taxa,
+                    y = elevation)) +
+  geom_boxplot() +
+  ggtitle("Elevation of Mosquitos at all NEON sites") +
+  xlab("Site ID") +
+  ylab("Elevation")
+#r statistical test
+anova(lm(elevation ~ siteID.taxa,
+         data = mos_all))
+```
+
+Box plot for the elevation of mosquitos at "ONAQ" NEON site:
+```{r boxplot-for-ONAQ-site}
+# make a boxplot for the elevation of mosquitos at "ONAQ" NEON site
+mos_all %>%
+  filter(siteID.taxa == "ONAQ") %>%
+  filter(!is.na(scientificName)) %>%
+  ggplot(aes(x = scientificName,
+             y = elevation)) +
+  geom_boxplot() +
+  ggtitle("Elevation of Mosquitos Species at ONAQ NEON site") +
+  xlab("Species") +
+  ylab("Elevation")
+```
+
+Box plot for the elevation of *Culex tarsalis* at all NEON sites:
+```{r boxplot-of-culex-elevation-all-sites}
+mos_all %>%
+  filter(scientificName == "Culex tarsalis") %>%
+  ggplot(aes(x = siteID.taxa,
+             y = elevation)) +
+  geom_boxplot() +
+  ggtitle("Elevation of Culex tarsalis Species at all NEON Sites") +
+  xlab("Site") +
+  ylab("Elevation")
+```
+
+```{r map-of-culex-weight-all-sites}
+usa_map <- map_data("usa")
+
+points_with_lat_long <- mos_all %>%
+  filter(!is.na(decimalLatitude)) %>%
+  filter(individualCount > 0) %>%
+  filter(scientificName == "Culex tarsalis") %>%
+  group_by(siteID, taxa) %>% 
+  summarise(total_count = sum(individualCount),
+            mean_lat = mean(decimalLatitude),
+            mean_long = mean(decimalLongitude))
+
+ggplot() +
+  geom_polygon(data = usa_map,
+               aes(x = long,
+                   y = lat,
+                   group = group),
+               fill = "dark green") +
+  coord_fixed(1.3) +
+  geom_point(data =  points_with_lat_long,
+             aes(x = mean_long,
+                 y = mean_lat,
+                 size = total_count))
 ```
 
 # Discussion
