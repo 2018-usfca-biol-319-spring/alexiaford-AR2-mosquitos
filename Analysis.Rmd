@@ -33,14 +33,12 @@ The mosquito NEON data comes from a wide range of NEON sites with varying domain
 
 Once the trap is collected by a technician minimal processing occurs at the Domain lab. The mosquitos are frozen, transferred and stored in dry sample vials at -80°C to be sent for identification and pathogen testing at a facility. Mosquitos are identified at external facilities in order to minimize identification errors and accurately identiy mosquitos to species. Identification is based on visual examination of external morphology. After identification, target species are destructively tested for pathogens. 
 
-Using mosquito data collected and provided by NEON this report will use R and RStudio to visualize results and test how the distribution of elevation varies across the National Ecological Observatory Network (NEON) sites and differing species. To begin, the mosquito NEON data was read into RStudio. R and RStudio was used in conjunction with the ggplot2 and dplyr packages to analyze the data. ANOVA was used in RStudio for plots made to test for significance of the results found. The data, code, and other files needed to reproduce the analyses are available on GitHub. 
+Using mosquito data collected and provided by NEON this report will use R and RStudio to visualize results and test how the distribution of elevation varies across NEON sites and differing species. To begin, the mosquito NEON data was read into RStudio. R and RStudio was used in conjunction with the ggplot2 and dplyr packages to analyze the data. ANOVA was used in RStudio for plots made to test for the significance of the results found. The data, code, and other files needed to reproduce the analyses are available on GitHub. 
 
-This report will specifically be analyzing how the distribution of elevation varies across all NEON sites and species using the species found at the "ONAQ" NEON site, the elevation of *Culex tarsalis* species at all sites, and the elevation of *Aedes nigromaculis* species at all sites. 
+This report will specifically be analyzing how the distribution of elevation varies across all NEON sites and species using: the "ONAQ" NEON site, the elevation of *Culex tarsalis* species at all sites, and the elevation of *Aedes nigromaculis* species at all sites. The "ONAQ" NEON site was of significance for this report as it was at a higher elevation than other sites. 
 
 *Site Information*
 "ONAQ" is short for Onaqui-Ault site. "ONAQ" is a core terrestrial site in Utah south of the rapidly developing Salt Lake City area. This area has been grazed by domestic livestock since settlement, the Forest Service has instituted a light to moderate fall and winter grazing regime. The vegetation of this site is dominantly sagebrush and western jupiner. Fire is a component of sagebrush, however invasions of exotic vegetation such as Bromus tectorum (aka drooping brome or cheatgrass) have dramatically shortened fire return intervals. The invasion fire feedback has resulted in the loss of native perenial species allowing for the opportunity to specifically study the restoration of sagebrush at this site and collect data on the effects of invasive species and rodent dynamics. The climate of this region is dry as it is located in the intermountain region, between the Sierra Nevada and Cascade ranges. In winter, the climate is dominated by a cool moist air from the northern Pacific. The mountain ranges cast a rain shadow across the Intermountain Region resulting in low precipitation in the basins. Since this site is located in the Great Basin the site experiences the effects of dust from urban and agricultural use.  This domain is broadly characterized by combinations of lower-elevation, sagebrush steppe and higher-elevation montane forests. This complex topography impacts climate, hydrology, and species distributions, with montane zones exerting a disproportionate influence.
-
-Describe where the data came from, including how they were collected in the field (information is in the pdf file in the data folder), some information about those sites and why you chose them, and how you are analyzing them (e.g. using R to visualize the results and the statistical tests you will use).
 
 # Results
 
@@ -74,7 +72,7 @@ mos_all <- mos_expert %>%
   full_join(mos_trapping, by = "sampleID", suffix = c(".taxa", ".sample"))
 ```
 
-Figure 1. Box plot for the elevation of mosquitos at all NEON sites:
+Figure 1. Box plot for the elevation of mosquitos at all NEON sites
 ```{r boxplot-of-mosquitos-elevation}
 # elevation of mosquitos at all sites in the NEON data
 ggplot(mos_all, aes(x = siteID.taxa,
@@ -91,7 +89,7 @@ anova(lm(elevation ~ siteID.taxa,
 ANOVA p-value: 2.2e-16
 This number shows there are some similarities but not all of the sites have similarities, this is most likely the case as the majority of the dry mass data for the sites is between 0 and 400 grams, but there is one outlier showing a mass of 1200 grams, somewhat skewing the p-value as the majority of the dry mass for each site is extremely similar. 
 
-Figure 2. Box plot for the elevation of mosquitos at "ONAQ" NEON site:
+Figure 2. Box plot for the elevation of mosquitos at "ONAQ" NEON site
 ```{r boxplot-for-ONAQ-site}
 # make a boxplot for the elevation of mosquitos at "ONAQ" NEON site
 mos_all %>%
@@ -111,7 +109,7 @@ anova(lm(elevation ~ scientificName,
 ANOVA p-value: 2.2e-16
 This number shows 
 
-Figure 3. Box plot for the elevation of *Culex tarsalis* at all NEON sites:
+Figure 3. Box plot for the elevation of *Culex tarsalis* at all NEON sites
 ```{r boxplot-of-culex-elevation-all-sites}
 mos_all %>%
   filter(scientificName == "Culex tarsalis") %>%
@@ -128,8 +126,8 @@ anova(lm(elevation ~ scientificName,
 ANOVA p-value: 2.2e-16
 This number shows 
 
-Figure 4. Map of *Culex tarsalis* at all NEON sites:
-```{r map-of-culex-elevation-all-sites}
+Figure 4. Map of *Culex tarsalis* at all NEON sites
+```{r map-of-culex-all-sites}
 usa_map <- map_data("usa")
 
 points_with_lat_long <- mos_all %>%
@@ -154,7 +152,7 @@ ggplot() +
                  size = total_count))
 ```
 
-Figure 5. Box plot for the elevation of *Aedes nigromaculis* at all NEON sites:
+Figure 5. Box plot for the elevation of *Aedes nigromaculis* at all NEON sites
 ```{r boxplot-of-aedes-elevation-all-sites}
 mos_all %>%
   filter(scientificName == "Aedes nigromaculis") %>%
@@ -173,7 +171,8 @@ This number shows
 
 It's important to be clear on whether or not you accept or reject your null hypothesis. What does the p-value mean biologically, in this case?
 
- From this all the siteID's and small mammal weight's were correlated as a box plot to look at the average small mammal weights of all NEON sites. After viewing the box plot of all the NEON site's average small mammal weights the sites with the highest average small mammal weight and the lowest average small mammal weight were then both analyzed.The site with the highest average weight was the LBJ National Grassland ("CLBJ" site) and the site with the lowest average weight was the Smithsonian Environmental Research Center ("SERC" site).These two sites were explored further using two separate box plots to look at why one site had a particularly high/low average weight and to ask if it was just that one site that caused the average weight to be high/low. This was done by taking the scientific names of the species at these sites against the average weight of the small mammals. Lastly, one of the "CLBJ" site's species and one of the "SERC" site's species were choosen to study further, in order to ask why the "CLBJ" site had a lot of variation in weight from species to species, and opposingly, why the "SERC" site had a much more constant weight across the board with it's varying species. The "CLBJ" species analyzed further was *Neotoma micropus* and *Mus musculus* was analyzed for the "SERC" site. One box plot was made for the weight of *Neotoma micropus*, correlating the species present at all of the NEON sites against weight, and an additional box plot was made for the same purpose just using the species *Mus musculus* instead.
+Figure 1 is a boxplot correlating elevation and siteID for all NEON sites. Approximately 30 sites are shown in the figure with elevation showcased on a scale from 0 to 3500. Most of the sites elevation are not above 1500, with only three sites above 1500 including: "CPER", "MOAB", and "ONAQ". Figure 2 models the elevation of varying species at the "ONAQ" site. Elevation is on a scale from 1600 to 1950. There are ten species showing elevation at the "ONAQ" site. All species present elevation: three species have lower elevations around 1600, two species display higher elevations around 1900, and the other five species have elevations in the middle of the scale varying between 1700 and 1900. Figure 3 displays the elevation of *Culex tarsalis* species at NEON sites. The elevation is showcased on a scale from 250 to 2000 with a total of tweleve sites. The elevation for these twelve sites are varying with most either at high or low elevations and only one site at a middle elevation of 1000. Figure 4 is a United States map displaying a total count scale from 1000 to 5000 of *Culex tarsalis* species present at varying locations ploted in the US. The majority of *Culex tarsalis* present are seen in the middle of the map in the North and South regions, with no *Culex tarsalis* present in the East and West regions. Figure 5 lastly, displays the elevation of *Aedes nigromaculis* species at NEON sites. The elevation is showcased on a scale from 250 to 1750 with a total of nine sites. The elevation for these nine sites are varying with most either at high or low elevations. Four sites are shown above an elevation of 1250 while the other five sites are shown below and elevation of 750. 
+
 # Discussion
 
 Higher temperatures below threshold levels can shorten the life cycle of both arboviruses and mosquitoes, increase blood meal and oviposition rates and thereby the efficiency of transmission (Reisen 2010). Together, these climate effects may expand the biogeographic ranges of mosquitoes and the parasites they transmit into temperate areas.
