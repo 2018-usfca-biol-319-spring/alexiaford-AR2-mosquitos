@@ -125,7 +125,7 @@ points_with_lat_long <- mos_all %>%
   filter(!is.na(decimalLatitude)) %>%
   filter(individualCount > 0) %>%
   filter(scientificName == "Culex tarsalis") %>%
-  group_by(siteID.taxa) %>% 
+  group_by(siteID.taxa) %>%
   summarise(total_count = sum(individualCount),
             mean_lat = mean(decimalLatitude),
             mean_long = mean(decimalLongitude))
