@@ -20,13 +20,7 @@ While NEON collects a wide range of data from atmospheric to even ecohydrology t
 
 NEON mosquito sampling takes place regularly during a time peroid in which mosquitos are active, this varies by domain. Sampling typically takes place more frequently at core sites than relocatable sites. Core sites are prioritized because of the long‐term nature of core site sampling. In addition, core sites are in wild land areas and provide baseline data to assess how ecological systems are changing through time [@hoekman2016design]. 
 
-This report will specifically be analyzing how the distribution of elevation varies across all NEON sites and species using boxplots and geographical data. The elevation of the "ONAQ" NEON site and the elevation of *Culex tarsalis* and *Aedes nigromaculis* species will be of great significance for this report. 
-
-add hypothesis to this.
-
- I also think you should start with a bigger question. Why might we be interested in small mammal weight? Or in how it varies between sites? That is, generally it's best to start an introduction at a broad scale, where many people will be able to relate, and then work your way in to the specifics of your particular study. I also think it's important to have a testable hypotheses, which usually goes somewhere near the end of your introduction. Which sites do you predict will have the mammals with the heaviest weights? Why?
- 
-Delete this placeholder text, and replace it with your introduction text. You should include background on the NEON project including proper citations (e.g. [@thorpe2016introduction]), the sets of sites you are comparing, and other relevent background information related to your specific hypotheses, including perhaps information on the mosquito sampling design [@hoekman2016design].
+This report will specifically be analyzing how the distribution of elevation varies across all NEON sites and species using boxplots and geographical data. The elevation of the "ONAQ" NEON site and the elevation of *Culex tarsalis* and *Aedes nigromaculis* species will be of great significance for this report. This report will ask: what are some ways in which the distribution of elevation varies across NEON sites and species? Hypothesizing that the distribution of elevation of mosquitos at varying sites is dependent upon factors such as: feeding, vegetation, location, mating, etc. 
 
 # Methods
 The mosquito NEON data comes from a wide range of NEON sites with varying domains. The sampling design is continous across all sites to ensure data is consistent and comparable across time and space. The sampling methods include sampling mosquitos at NEON sites using CDC CO2 light traps. All traps use CO2 as bait because CO2 attracts the mosquitos as it is a component of vertebrate breath that mosquitos use to locate hosts. Once the mosquito is attracted to the trap a fan pulls the mosquitoes into a net bag for live storage until the trap is collected by a field technician. The design of the CDC CO2 light trap has remained intact since 1962, maintaining its effeciancy and effectiveness in use as the design has allowed for the removal of additional "trash" insects not swaying or adding to collection of data in anyway [@mcnelly1989cdc].
@@ -38,7 +32,7 @@ Using mosquito data collected and provided by NEON this report will use R and RS
 This report will specifically be analyzing how the distribution of elevation varies across all NEON sites and species using: the "ONAQ" NEON site, the elevation of *Culex tarsalis* species at all sites, and the elevation of *Aedes nigromaculis* species at all sites. The "ONAQ" NEON site was of significance for this report as it was at a higher elevation than other sites.
 
 *Site Information*
-"ONAQ" is short for Onaqui-Ault site. "ONAQ" is a core terrestrial site in Utah south of the rapidly developing Salt Lake City area. This area has been grazed by domestic livestock since settlement, the Forest Service has instituted a light to moderate fall and winter grazing regime. The vegetation of this site is dominantly sagebrush and western jupiner. Fire is a component of sagebrush, however invasions of exotic vegetation such as Bromus tectorum (aka drooping brome or cheatgrass) have dramatically shortened fire return intervals. The invasion fire feedback has resulted in the loss of native perenial species allowing for the opportunity to specifically study the restoration of sagebrush at this site and collect data on the effects of invasive species and rodent dynamics. The climate of this region is dry as it is located in the intermountain region, between the Sierra Nevada and Cascade ranges. In winter, the climate is dominated by a cool moist air from the northern Pacific. The mountain ranges cast a rain shadow across the Intermountain Region resulting in low precipitation in the basins. Since this site is located in the Great Basin the site experiences the effects of dust from urban and agricultural use.  This domain is broadly characterized by combinations of lower-elevation, sagebrush steppe and higher-elevation montane forests. This complex topography impacts climate, hydrology, and species distributions, with montane zones exerting a disproportionate influence.
+"ONAQ" is short for Onaqui-Ault site. "ONAQ" is a core terrestrial site in Utah south of the rapidly developing Salt Lake City area. This area has been grazed by domestic livestock since settlement, the Forest Service has instituted a light to moderate fall and winter grazing regime. The vegetation of this site is dominantly sagebrush and western jupiner. Fire is a component of sagebrush, however invasions of exotic vegetation as well as spatial and temporal variability in resources has large‐scale effects such as the invasion of Bromus tectorum (aka drooping brome or cheatgrass) dramatically shortening fire return intervals [@chambers2007makes]. The invasion fire feedback has resulted in the loss of native perenial species allowing for the opportunity to specifically study the restoration of sagebrush at this site and collect data on the effects of invasive species and rodent dynamics. The climate of this region is dry as it is located in the intermountain region, between the Sierra Nevada and Cascade ranges. In winter, the climate is dominated by a cool moist air from the northern Pacific. The mountain ranges cast a rain shadow across the Intermountain Region resulting in low precipitation in the basins. Since this site is located in the Great Basin the site experiences the effects of dust from urban and agricultural use.  This domain is broadly characterized by combinations of lower-elevation, sagebrush steppe and higher-elevation montane forests. This complex topography impacts climate, hydrology, and species distributions, with montane zones exerting a disproportionate influence.
 
 # Results
 ```{r load-packages}
@@ -77,7 +71,7 @@ ggplot(mos_all, aes(x = siteID.taxa,
   geom_boxplot() +
   ggtitle("Elevation of Mosquitos at all NEON sites") +
   xlab("Site ID") +
-  ylab("Elevation")
+  ylab("Elevation (meters)")
 #r statistical test
 anova(lm(elevation ~ siteID.taxa,
          data = mos_all))
@@ -97,7 +91,7 @@ mos_all %>%
   geom_boxplot() +
   ggtitle("Elevation of Mosquitos Species at ONAQ NEON site") +
   xlab("Species") +
-  ylab("Elevation")
+  ylab("Elevation (meters)")
 #r statistical test
 anova(lm(elevation ~ scientificName,
          data = mos_all))
@@ -115,7 +109,7 @@ mos_all %>%
   geom_boxplot() +
   ggtitle("Elevation of Culex tarsalis Species at all NEON Sites") +
   xlab("Site") +
-  ylab("Elevation")
+  ylab("Elevation (meters)")
 anova(lm(elevation ~ scientificName,
          data = mos_all))
 ```
@@ -137,6 +131,7 @@ points_with_lat_long <- mos_all %>%
             mean_long = mean(decimalLongitude))
 
 ggplot() +
+  ggtitle("Elevation of Culex tarsalis Species at all NEON Sites") +
   geom_polygon(data = usa_map,
                aes(x = long,
                    y = lat,
@@ -158,7 +153,7 @@ mos_all %>%
   geom_boxplot() +
   ggtitle("Elevation of Aedes nigromaculis Species at all NEON Sites") +
   xlab("Site") +
-  ylab("Elevation")
+  ylab("Elevation (meters)")
 anova(lm(elevation ~ scientificName,
          data = mos_all))
 ```
@@ -167,15 +162,12 @@ ANOVA p-value: 2.2e-16
 This number shows that there are similarities in the elevation of *Aedes nigromaculis* species at all NEON sites because the number is so small there is a very low precentage that what we are observing is random in this boxplot. For this reason we can reject the null hypothesis.
 
 
-Figure 1 is a boxplot correlating elevation and siteID for all NEON sites. Approximately 30 sites are shown in the figure with elevation showcased on a scale from 0 to 3500. Most of the sites elevation are not above 1500, with only three sites above 1500 including: "CPER", "MOAB", and "ONAQ". Figure 2 models the elevation of varying species at the "ONAQ" site. Elevation is on a scale from 1600 to 1950. There are ten species showing elevation at the "ONAQ" site. All species present elevation: three species have lower elevations around 1600, two species display higher elevations around 1900, and the other five species have elevations in the middle of the scale varying between 1700 and 1900. Figure 3 displays the elevation of *Culex tarsalis* species at NEON sites. The elevation is showcased on a scale from 250 to 2000 with a total of tweleve sites. The elevation for these twelve sites are varying with most either at high or low elevations and only one site at a middle elevation of 1000. Figure 4 is a United States map displaying a total count scale from 1000 to 5000 of *Culex tarsalis* species present at varying locations ploted in the US. The majority of *Culex tarsalis* present are seen in the middle of the map in the North and South regions, with no *Culex tarsalis* present in the East and West regions. Figure 5 lastly, displays the elevation of *Aedes nigromaculis* species at NEON sites. The elevation is showcased on a scale from 250 to 1750 with a total of nine sites. The elevation for these nine sites are varying with most either at high or low elevations. Four sites are shown above an elevation of 1250 while the other five sites are shown below and elevation of 750. 
+Figure 1 is a boxplot correlating elevation and siteID for all NEON sites. Approximately 30 sites are shown in the figure with elevation showcased on a scale from 0 to 3,500 meters. Most of the sites elevation are not above 1,500 meters, with only three sites above 1,500 meters including: "CPER", "MOAB", and "ONAQ". Figure 2 models the elevation of varying species at the "ONAQ" site. Elevation is on a scale from 1600 to 1,950 meters. There are ten species showing elevation at the "ONAQ" site. All species present elevation: three species have lower elevations around 1,600 meteres, two species display higher elevations around 1,900 meters, and the other five species have elevations in the middle of the scale varying between 1,700 and 1,900 meters. Figure 3 displays the elevation of *Culex tarsalis* species at NEON sites. The elevation is showcased on a scale from 250 to 2,000 meters with a total of tweleve sites. The elevation for these twelve sites are varying with most either at high or low elevations and only one site at a middle elevation of 1,000 meters. Figure 4 is a United States map displaying a total count scale from 1,000 to 5,000 of *Culex tarsalis* species present at varying locations ploted in the US. The majority of *Culex tarsalis* present are seen in the middle of the map in the North and South regions, with no *Culex tarsalis* present in the East and some species present in the West. Figure 5 lastly, displays the elevation of *Aedes nigromaculis* species at NEON sites. The elevation is showcased on a scale from 250 to 1,750 meters with a total of nine sites. The elevation for these nine sites are varying with most either at high or low elevations. Four sites are shown above an elevation of 1,250 meteres while the other five sites are shown below and elevation of 750 meters. 
 
 # Discussion
+Figure 1 begins the report with a broad question: how does the distribution of elevation of mosquitos vary across all NEON sites? With this figure we see that the elevation is somewhat varying yet the majority of the elevation of mosquitos at approximately 30 sites are under 1,000 meters besides the sites: "CPER", "MOAB", and "ONAQ". Because of this another question was prosed, resulting in the creation of Figure 2: why is it that the "ONAQ" NEON Utah site is of that much greater elevation than most of the other NEON sites? This is further explained looking at a site in Colorado, the Northern Colorado Front Range, with a similiar elevation range of 1,500–2,400 meters. The study conducted shows that species richness was highest in plains habitats at elevations below 1,600 meters. Numerous species were found exclusively or predominantly at low elevations below 1,700 meters [@eisen2008mosquito]. Such as species found at the "ONAQ" NEON site, *Culex tarsalis* seen in Figure 3. Figure 3, 4, and 5 all prose a similar question: how does the elevation vary for mosquito species at the "ONAQ" site? Figure 3 we see that the elevation is typically either high (above 1,000 meters) or low (below 750 meters) with only one species seen between 750 and 1,000 meters. With this an interesting theme arose that landscape and elevation seem to be a pattern in the *Culex tarsalis* species. A study shows that host-seeking patterns in *Culex tarsalis* species indicated that passeriform birds (64%) and rabbits (25%) were the most frequent bloodmeal hosts and that the percentage of females feeding on birds varied temporally as an inverse function of mosquito abundance [@lothrop2001landscape]. Not only has it been studied that host-seeking patterns are prominent in *Culex tarsalis* species, its found that mating patterns are also temporally dependent as location and selevtion of an oviposition site is an essentional part of the life history of all mosquito species [@bentley1989chemical]. Figure 4, further showcases that sites with elevations between 1,000 meters to around 2,000 meters are more prominent in *Culex tarsalis* species abundance, as Northwest and Southwest regions of the United States are tyipcally in this elevation range, where as regions in the East have elevations closer to sealevel. Lastly, Figure 5, further answers the question: how does the elevation vary for mosquito species at the "ONAQ" site, by looking at the species *Aedes nigromaculis*. *Aedes nigromaculis* similarly to *Culex tarsalis* shows that the elevation for these nine sites *Aedes nigromaculis* is found at are varying with most either at high or low elevations. Interestingly so temporal location of these species matters. A study in the mountainous area of Wyoming show that the location of *Aedes nigromaculis* is dependent on both human abundance (lower elevation) and river location (high and low elevations). Locations populated with greater human abundance allows for the ample feeding of *Aedes nigromaculis* while on the other hand, being near a river is a preferable habit for the species [@wyoming1996elevational]. With this being said temporally both are benefically while areas in middle ground elevations are not as appealing to such species. INCLUDE VEGETATION OF ONAQ SITE IN RELATION TO ELEVATION. 
 
-Higher temperatures below threshold levels can shorten the life cycle of both arboviruses and mosquitoes, increase blood meal and oviposition rates and thereby the efficiency of transmission (Reisen 2010). Together, these climate effects may expand the biogeographic ranges of mosquitoes and the parasites they transmit into temperate areas.
-
-This domain is broadly characterized by combinations of lower-elevation, sagebrush steppe and higher-elevation montane forests. This complex topography impacts climate, hydrology, and species distributions, with montane zones exerting a disproportionate influence.
-
-Discuss the results you found in the context of what you know about the site/sites and the predominant types of vegatation in those locations. Think also about the community dynamics of the mammal community at each of the sites, in the context of what you know about different types of species interactions, food webs, trophic transfer, etc.
+Overall, it seems that the hypothesis is in fact true in that the distribution of elevation of mosquitos at varying sites is dependent upon factors such as: feeding, vegetation, location, mating, etc. All these factors collectively result in the species abundance at NEON sites/elevations. 
 
 # Sources Cited
 
