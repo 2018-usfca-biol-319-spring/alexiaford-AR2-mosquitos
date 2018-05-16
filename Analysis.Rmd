@@ -143,7 +143,7 @@ I found that elevation significantly differed between *Culex tarsalis* species a
 
 Figure 4. Map of *Culex tarsalis* at all NEON sites
 ```{r map-of-culex-all-sites}
-# make a map using ggplot, the longitude and latitude values 
+# make a map using ggplot, the longitude and latitude values
 # will be the x and y axis for the count of culex speices
 usa_map <- map_data("usa")
 
