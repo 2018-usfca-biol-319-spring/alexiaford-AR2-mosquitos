@@ -85,11 +85,11 @@ anova(lm(elevation ~ siteID.taxa,
          data = mos_all))
 ```
 **ANOVA Statistical Test**
-ANOVA p-value: 2.2e-16
-This number shows that there are similarities in the elevation of mosquitoes at all NEON sites because the number is so small there is a  very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
+ANOVA p-value: p < 0.001
+This number shows that there are there are in fact significant differences between these NEON sites because the number is so small there is a very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
 
 ## Figure 1 Description
-Figure 1 is a box plot correlating elevation and siteID for all NEON sites. Approximately 30 sites are shown in the figure with elevation showcased on a scale from 0 to 3,500 meters. Most of the sites elevation are not above 1,500 meters, with only three sites above 1,500 meters including: "CPER", "MOAB", and "ONAQ". 
+I found that elevation significantly differed between NEON sites (Figure 1; ANOVA p < 0.001). Figure 1 is a box plot correlating elevation and siteID for all NEON sites. Approximately 30 sites are shown in the figure with elevation showcased on a scale from 0 to 3,500 meters. Most of the sites elevation are not above 1,500 meters, with only three sites above 1,500 meters including: "CPER", "MOAB", and "ONAQ". 
 
 Figure 2. Box plot for the elevation of mosquitoes at "ONAQ" NEON site
 ```{r boxplot-for-ONAQ-site}
@@ -108,14 +108,16 @@ anova(lm(elevation ~ scientificName,
          data = mos_all))
 ```
 **ANOVA Statistical Test**
-ANOVA p-value: 2.2e-16
-This number shows that there are similarities in the elevation of mosquito species at the "ONAQ" NEON site because the number is so small there is a  very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
+ANOVA p-value: p < 0.001
+This number shows that there are differences in the elevation of mosquito species at the "ONAQ" NEON site because the number is so small there is a  very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
 
 ## Figure 2 Description
-Figure 2 models the elevation of varying species at the "ONAQ" site. Elevation is on a scale from 1,600 to 1,950 meters. There are ten species showing elevation at the "ONAQ" site. All species present elevation: three species have lower elevations around 1,600 meters, two species display higher elevations around 1,900 meters, and the other five species have elevations in the middle of the scale varying between 1,700 and 1,900 meters. 
+I found that elevation significantly differed between mosquito species at the "ONAQ" NEON site (Figure 2; ANOVA p < 0.001). Figure 2 models the elevation of varying species at the "ONAQ" site. Elevation is on a scale from 1,600 to 1,950 meters. There are ten species showing elevation at the "ONAQ" site. All species present elevation: three species have lower elevations around 1,600 meters, two species display higher elevations around 1,900 meters, and the other five species have elevations in the middle of the scale varying between 1,700 and 1,900 meters. 
 
 Figure 3. Box plot for the elevation of *Culex tarsalis* at all NEON sites
 ```{r boxplot-of-culex-elevation-all-sites}
+# make a boxplot for the culex species at all NEON sites using the
+# mos_all data to make a ggplot and filtering out the culex species
 mos_all %>%
   filter(scientificName == "Culex tarsalis") %>%
   ggplot(aes(x = siteID.taxa,
@@ -128,14 +130,16 @@ anova(lm(elevation ~ scientificName,
          data = mos_all))
 ```
 **ANOVA Statistical Test**
-ANOVA p-value: 2.2e-16
-This number shows that there are similarities in the elevation of *Culex tarsalis* species at all NEON sites because the number is so small there is a very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
+ANOVA p-value: p < 0.001
+This number shows that there are differences in the elevation of *Culex tarsalis* species at all NEON sites because the number is so small there is a very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
 
 ## Figure 3 Description
-Figure 3 displays the elevation of *Culex tarsalis* species at NEON sites. The elevation is showcased on a scale from 250 to 2,000 meters with a total of twelve sites. The elevation for these twelve sites are varying with most either at high or low elevations and only one site at a middle elevation of 1,000 meters. 
+I found that elevation significantly differed between *Culex tarsalis* species at all NEON sites (Figure 3; ANOVA p < 0.001). Figure 3 displays the elevation of *Culex tarsalis* species at NEON sites. The elevation is showcased on a scale from 250 to 2,000 meters with a total of twelve sites. The elevation for these twelve sites are varying with most either at high or low elevations and only one site at a middle elevation of 1,000 meters. 
 
 Figure 4. Map of *Culex tarsalis* at all NEON sites
 ```{r map-of-culex-all-sites}
+# make a map using ggplot, the longitude and latitude values 
+# will be the x and y axis for the count of culex speices
 usa_map <- map_data("usa")
 
 points_with_lat_long <- mos_all %>%
@@ -165,6 +169,8 @@ Figure 4 is a United States map displaying a total count scale from 1,000 to 5,0
 
 Figure 5. Box plot for the elevation of *Aedes nigromaculis* at all NEON sites
 ```{r boxplot-of-aedes-elevation-all-sites}
+# make a boxplot for the aedes species at all NEON sites using the
+# mos_all data to make a ggplot and filtering out the aedes species
 mos_all %>%
   filter(scientificName == "Aedes nigromaculis") %>%
   ggplot(aes(x = siteID.taxa,
@@ -177,11 +183,11 @@ anova(lm(elevation ~ scientificName,
          data = mos_all))
 ```
 **ANOVA Statistical Test**
-ANOVA p-value: 2.2e-16
-This number shows that there are similarities in the elevation of *Aedes nigromaculis* species at all NEON sites because the number is so small there is a very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
+ANOVA p-value: p < 0.001
+This number shows that there are differences in the elevation of *Aedes nigromaculis* species at all NEON sites because the number is so small there is a very low percentage that what we are observing is random in this box plot. For this reason we can reject the null hypothesis.
 
 ## Figure 5 Description
-Figure 5 lastly, displays the elevation of *Aedes nigromaculis* species at NEON sites. The elevation is showcased on a scale from 250 to 1,750 meters with a total of nine sites. The elevation for these nine sites are varying with most either at high or low elevations. Four sites are shown above an elevation of 1,250 meters while the other five sites are shown below an elevation of 750 meters.
+I found that elevation significantly differed between *Aedes nigromaculis* species at all NEON sites (Figure 5; ANOVA p < 0.001). Figure 5 lastly, displays the elevation of *Aedes nigromaculis* species at NEON sites. The elevation is showcased on a scale from 250 to 1,750 meters with a total of nine sites. The elevation for these nine sites are varying with most either at high or low elevations. Four sites are shown above an elevation of 1,250 meters while the other five sites are shown below an elevation of 750 meters.
 
 # Discussion
 Figure 1 begins the report with a broad question: how does the distribution of elevation of mosquitoes vary across all NEON sites? With this figure we see that the elevation is somewhat varying yet the majority of the elevation of mosquitoes at approximately 30 sites are under 1,000 meters excluding the sites: "CPER", "MOAB", and "ONAQ". Because of this another question was posed, resulting in the creation of Figure 2: why is it that the "ONAQ", Onaqui-Ault, NEON Utah site is of that much greater elevation than most of the other NEON sites? This is further explained looking at a study done in Colorado, at the Northern Colorado Front Range, with a similar elevation range of 1,500–2,400 meters. The study conducted shows that species richness was highest in plains habitats at elevations below 1,600 meters. Numerous species were found exclusively or predominantly at low elevations below 1,700 meters [@eisen2008mosquito]. Such as the species found at the "ONAQ" NEON site, *Culex tarsalis* seen in Figure 3. Figure 3, 4, and 5 all prose a similar question: how does the elevation vary for mosquito species at the "ONAQ" site? In figure 3 we see that the elevation is typically either high (above 1,000 meters) or low (below 750 meters) with only one species seen between 750 and 1,000 meters. With this an interesting theme arose that landscape and elevation seem to be a pattern in the *Culex tarsalis* species. A study shows that host-seeking patterns in *Culex tarsalis* species indicated that passeriform birds (64%) and rabbits (25%) were the most frequent bloodmeal hosts and that the percentage of females feeding on birds varied temporally as an inverse function of mosquito abundance [@lothrop2001landscape]. Not only has it been studied that host-seeking patterns are prominent in *Culex tarsalis* species, its found that mating patterns are also temporally dependent as location and selection of an oviposition site is an essential part of the life history of all mosquito species [@bentley1989chemical]. Figure 4, further showcases that sites with elevations between 1,000 meters to around 2,000 meters are more prominent in *Culex tarsalis* species abundance, as Northwest and Southwest regions of the United States are typically in this elevation range, where as regions in the East have lower elevations, closer to sea level. Lastly, Figure 5, further answers the question: how does the elevation vary for mosquito species at the "ONAQ" site, by looking at the species *Aedes nigromaculis*. *Aedes nigromaculis* similarly to *Culex tarsalis* exhibit that the elevation for these nine sites with *Aedes nigromaculis* present are varying with most species abundance found at either high or low elevations. Interestingly so, temporal location of these species also matters. A study in the mountainous area of Wyoming show that the location of *Aedes nigromaculis* is dependent on both human abundance (lower elevation) and river location (high and low elevations). Locations populated with greater human abundance allows for the ample feeding of *Aedes nigromaculis* while on the other hand, being near a river is a preferable habit for the species [@wyoming1996elevational]. With this being said temporally both locations (high and low) are beneficial while areas in middle ground elevations are not as appealing to such species. To conclude, vegetation is also shown to have an effect on the sampling abundance of both *Culex tarsalis* and *Aedes nigromaculis* (both found at the "ONAQ" Utah NEON site).The study finds a relationship between vegetation and habitat of the *Culex tarsalis* and *Aedes nigromaculis* host-feeding patterns evaluated at the base of the Sierra Nevada foothills in Coachella Valley California, and also seen at the "ONAQ" NEON site [@meyer1991influence]. 
